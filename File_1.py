@@ -37,7 +37,7 @@ class Vector:
             self.x += self.v.x
             self.y += self.v.y
              self.uy-=g/100
-           if (uy==0)&&(y==0):
+           if ((uy==0)&&(y==0)):
                     print("STOP d"+i)
 
     def acc(self):
