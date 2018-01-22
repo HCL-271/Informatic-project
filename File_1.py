@@ -1,59 +1,57 @@
 H = 40.0
-g = 9.81
-t = 0.01
-S = H
-u = 0
+g = -9.81
+t = 0.07
+r=0.1
+y=0
+x=1
+uy=2
+ux=3
+t1 = 0.07
+s="   "
 mol = []
-class Vector:
-    def __init__(self, x, y,ux,uy)://Инициализируем координаты,начальную высоту, чкорости.
-        self.x=x
-          self.y =y 
-          self.ux=ux
-          self.uy=uy
-          
-    def __plus__(self, other):
-        return Vector(self.x + other.x, self.y + other.y)
-
-    def __minus__(self, other):
-        return Vector(self.x - other.x, self.y - other.y)
-
-    def __mnoj__(self, other):
-        return Vector(self.x * other, self.y * other)
-
-    def __del__(self, other):
-        return Vector(self.x / other, self.y / other)
-
-    def __abs__(self):
-        return (self.x**2+self.y**2)**(1/2)
-     
-     
-   class Particle:
-    def __init__(self, x, y):
-        self.x, self.y,  self.ux=ux
-          self.uy=uy
+Particles = [[H,0.5*H],[0,0],[0,0],[0,0]]
+print(Particles[y][1])
+class Molekula:
+    def __init__(self,i,j):
+        self.i ,self.j=i,j
         mol.append(self)
 
+    def kick(self):
+        Particles[uy][i] *= -1
+        Particles[ux][i] *= -1
+        Particles[uy][j] *= -1
+        Particles[ux][j] *= -1
     def move(self):
-            self.x += self.v.x
-            self.y += self.v.y
-             self.uy-=g/100
-           if ((uy==0)&&(y==0)):
-                    print("STOP d"+i)
+        Particles[uy][i] += g * t
+        Particles[y][i] += Particles[uy][i] * t + (g * t ** 2) / 2
+        Particles[x][i] += ux * t
+        if Particles[y][i] <= 0:
+            if Particles[uy][i] < 0:
+                Particles[uy][i] = -0.6 * Particles[uy][i]
 
-    def acc(self):
-        a = Vector(0, g)
-        for i in mol:
-            if i is not self:
-                z = Vector(i.x - self.x, i.y - self.y)
-                r = a - z / abs(z) ** 8 + z / abs(z) ** 6
-                if (abs(r) < 0.9*abs(z)) | (abs(r) > 1.1*abs(z)):
-                    a = r
-        self.v += a
-     
 
-d = Particle(0, H+10,0,0)
-for i in range(1, 50):
-      d.acc()
-    d.move()
-    print(d.x, d.y)
-     
+
+
+for k in range(1, 10):
+   for i in range (len(Particles[0])):
+       j=2
+       print(i,j)
+       for j in range(len(Particles[0])):
+        if pow(((Particles[y][i]-Particles[y][j]) **2 + (Particles[x][i]-Particles[x][j])**2),0.5)<=r:
+            Particles[uy][i] *= -1
+            Particles[ux][i] *= -1
+            Particles[uy][j] *= -1
+            Particles[ux][j] *= -1
+            print("Kick")
+
+        print(Particles[y][j])
+        print(Particles[y][i])
+
+        Particles[uy][i] += g * t
+        Particles[y][i] += Particles[uy][i] * t + (g * t ** 2) / 2
+        Particles[x][i] += ux * t
+        if Particles[y][i] <= 0:
+            if Particles[uy][i] < 0:
+                Particles[uy][i] = -0.6 * Particles[uy][i]
+   #print("%.2f" % Particles[y][j],s,"%.2f" % Particles[uy][j],s,"%.2f" % t1)
+
