@@ -1,7 +1,9 @@
+
 import tkinter
-g = -9.81
+g = 9.81
+height=1000
 t = 0.08
-r = 10
+r = height/100
 y = 0
 x = 1
 uy = 2
@@ -12,21 +14,34 @@ mol = []
 k=10
 
 H = 200
-Particles = [[H*0.2,0.1*H],[0,0],[0,0],[0,0]]
+Particles = [[height*0.8,height*0.9],[0,0],[0,0],[0,0]]
 def time_move(n):
     if n < 800:
-
-        canvas.move(obj, -ux*t*k, -k*(Particles[3][0]*t + g*t*t*0.5))
-        canvas.move(obj1, -ux * t*k, -k*(Particles[3][0] * t + g * t * t * 0.5))
+        i = 0
+        j = 0
+        for i in range(len(Particles[y])):
+            j = i + 1
+            Particles[uy][i] += g * t
+            Particles[uy][i] += g * t
+            Particles[y][i] += Particles[uy][i] * t + (g * t ** 2) / 2
+            Particles[x][i] += Particles[ux][i] * t
+            if Particles[y][i] >=height-r/2 :
+                if Particles[uy][i] >0:
+                    Particles[uy][i] = -0.8 * Particles[uy][i]
+        print(Particles[y][0])
+        print(Particles[uy][0])
+        print(n)
+        canvas.move(obj, ux*t, (Particles[uy][0]*t))
+        canvas.move(obj1, ux * t, (Particles[uy][1] * t ))
         canvas.after(50, lambda: time_move(n + 1))
 #
 frame = tkinter.Tk()
 
-canvas = tkinter.Canvas(frame, width=300, height=300, background="black")
+canvas = tkinter.Canvas(frame, width=height, height=height, background="white")
 canvas.grid()
 #
-obj = canvas.create_oval(140, 10, 160, 30, fill='white', width=0)
-obj1 = canvas.create_oval(140, 160, 160, 180, fill='white', width=0)
+obj = canvas.create_oval(height/2 - r, height-(H-r), height/2+r, height-(H+r), fill='black', width=0)
+obj1 = canvas.create_oval(height/2 -r, height-(H/2-r), height/2 +r,height -(H/2+r), fill='black', width=0)
 canvas.after(50, lambda: time_move(0))
 #
 frame.mainloop()
