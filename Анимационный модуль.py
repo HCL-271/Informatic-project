@@ -1,5 +1,6 @@
 import time
 import tkinter
+import random
 g = 10
 height=1000
 t = 0.08
@@ -12,13 +13,13 @@ t1 = 0.5
 s = "   "
 mol = []
 kpoteri = 0.9
-
-Particles = [[0,height*0.5],[510,500],[0,0],[0,0]]
+rand = random.randint(1,15)
+Particles = [[0,height*0.5,height*0,3],[500+rand,500,505],[0,0,0],[0,0,0]]
 def time_move(n):
     if n < 800:
         i = 0
         j = 0
-        for i in range(len(Particles[y])):
+        for i in range(len(Particles[y])-1):
 
             Particles[uy][i] += round(g * t)
             Particles[y][i] += round(Particles[uy][i] * t)
@@ -39,7 +40,7 @@ def time_move(n):
             #print (Particles[y][0])
             #print(Particles[y][1])
             #print("  = =================")
-            if (j <= 1):
+            if (j <= 2):
                 length=round(pow(((Particles[y][i] - Particles[y][j]) ** 2 + (Particles[x][i] - Particles[x][j]) ** 2), 0.5))
                 if (length <= 2*r):
                     a = round(Particles[uy][i]*abs((Particles[y][i] - Particles[y][j]))/length)
@@ -67,7 +68,7 @@ frame = tkinter.Tk()
 canvas = tkinter.Canvas(frame, width=height, height=height, background="white")
 canvas.grid()
 #
-obj = canvas.create_oval(500-r+10,Particles[y][0] - r,500+r+10,  Particles[y][0]+r,  fill='black', width=0)
+obj = canvas.create_oval(500-r+rand,Particles[y][0] - r,500+r+rand,  Particles[y][0]+r,  fill='black', width=0)
 obj1 = canvas.create_oval(500-r,Particles[y][1] -r, 500+r, Particles[y][1] +r, fill='black', width=0)
 canvas.after(50, lambda: time_move(0))
 #
