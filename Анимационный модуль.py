@@ -75,7 +75,7 @@ def time_move(n):
 #
 frame = tkinter.Tk()
 
-canvas = tkinter.Canvas(frame, width=height, height=height, background="white")
+canvas = tkinter.Canvas( frame, width=height, height=height, background="white")
 canvas.grid()
 #
 obj = canvas.create_oval(Particles[x][0]-r,Particles[y][0] - r,Particles[x][0]+r,  Particles[y][0]+r,  fill='black', width=0)
